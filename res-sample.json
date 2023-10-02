@@ -1,0 +1,23 @@
+{
+  "billingDetails": {
+    "billedDurationInMilliseconds": 800,
+    "billedMemoryUsedInMB": 64
+  },
+  "executionArn": "arn:aws:states:us-east-1:310446161114:express:bookingFlow-dev:67470606-54ae-4a27-8394-45a24342084b:8b222429-a4ef-415f-bcc4-6dbfac68957b",
+  "input": "{\"requestBody\": {\"testing\":\"henlo\"}, \"pathParameters\": { \"retailerId\": \"12345\", \"periodId\": \"qwert\" }}",
+  "inputDetails": {
+    "__type": "com.amazonaws.swf.base.model#CloudWatchEventsExecutionDataDetails",
+    "included": true
+  },
+  "name": "67470606-54ae-4a27-8394-45a24342084b",
+  "output": "{\"requestBody\":{\"testing\":\"henlo\"},\"pathParameters\":{\"retailerId\":\"12345\",\"periodId\":\"qwert\"},\"booking\":{\"originalRequest\":{\"event\":{\"requestBody\":{\"testing\":\"henlo\"},\"pathParameters\":{\"retailerId\":\"12345\",\"periodId\":\"qwert\"}},\"context\":{\"callbackWaitsForEmptyEventLoop\":true,\"functionVersion\":\"$LATEST\",\"functionName\":\"step-functions-booking-mockup-dev-getBooking\",\"memoryLimitInMB\":\"1024\",\"logGroupName\":\"/aws/lambda/step-functions-booking-mockup-dev-getBooking\",\"logStreamName\":\"2023/10/02/[$LATEST]c3d7b56604194863827772e5edad2fbe\",\"invokedFunctionArn\":\"arn:aws:lambda:us-east-1:310446161114:function:step-functions-booking-mockup-dev-getBooking\",\"awsRequestId\":\"98d271ab-5d38-41bc-a69c-d46b0e31bdfd\"}},\"getBookingStatus\":\"TK_EXISTS\"},\"result\":{\"originalRequest\":{\"event\":{\"requestBody\":{\"testing\":\"henlo\"},\"pathParameters\":{\"retailerId\":\"12345\",\"periodId\":\"qwert\"},\"booking\":{\"originalRequest\":{\"event\":{\"requestBody\":{\"testing\":\"henlo\"},\"pathParameters\":{\"retailerId\":\"12345\",\"periodId\":\"qwert\"}},\"context\":{\"callbackWaitsForEmptyEventLoop\":true,\"functionVersion\":\"$LATEST\",\"functionName\":\"step-functions-booking-mockup-dev-getBooking\",\"memoryLimitInMB\":\"1024\",\"logGroupName\":\"/aws/lambda/step-functions-booking-mockup-dev-getBooking\",\"logStreamName\":\"2023/10/02/[$LATEST]c3d7b56604194863827772e5edad2fbe\",\"invokedFunctionArn\":\"arn:aws:lambda:us-east-1:310446161114:function:step-functions-booking-mockup-dev-getBooking\",\"awsRequestId\":\"98d271ab-5d38-41bc-a69c-d46b0e31bdfd\"}},\"getBookingStatus\":\"TK_EXISTS\"}},\"context\":{\"callbackWaitsForEmptyEventLoop\":true,\"functionVersion\":\"$LATEST\",\"functionName\":\"step-functions-booking-mockup-dev-getTKBooking\",\"memoryLimitInMB\":\"1024\",\"logGroupName\":\"/aws/lambda/step-functions-booking-mockup-dev-getTKBooking\",\"logStreamName\":\"2023/10/02/[$LATEST]ced3bdaa4e654d54a39590aef716d940\",\"invokedFunctionArn\":\"arn:aws:lambda:us-east-1:310446161114:function:step-functions-booking-mockup-dev-getTKBooking\",\"awsRequestId\":\"71ad8025-9396-49c6-b004-51eff76ddd6b\"}},\"getTKBookingStatus\":\"TK booking there :3\"}}",
+  "outputDetails": {
+    "__type": "com.amazonaws.swf.base.model#CloudWatchEventsExecutionDataDetails",
+    "included": true
+  },
+  "startDate": 1.696282416362E9,
+  "stateMachineArn": "arn:aws:states:us-east-1:310446161114:stateMachine:bookingFlow-dev",
+  "status": "SUCCEEDED",
+  "stopDate": 1.696282417073E9,
+  "traceHeader": "Root=1-651b3730-95087edea9d4518a523a1415;Sampled=1"
+}

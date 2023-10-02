@@ -1,0 +1,100 @@
+service: step-functions-booking-mockup
+frameworkVersion: '3'
+
+custom:
+  TK_EXISTS: "TK_EXISTS"
+  TK_NOT_FOUND: "TK_NOT_FOUND"
+  BOOK_NOT_FOUND: "BOOK_NOT_FOUND"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+  environment:
+    TK_EXISTS: "${self:custom.TK_EXISTS}"
+    TK_NOT_FOUND: "${self:custom.TK_NOT_FOUND}"
+    BOOK_NOT_FOUND: "${self:custom.BOOK_NOT_FOUND}"
+
+functions:
+  getBooking:
+    handler: src/getBooking.handler
+  getTKBooking:
+    handler: src/getTKBooking.handler
+  createTKBooking:
+    handler: src/createTKBooking.handler
+  sendNotFoundError:
+    handler: src/sendNotFoundError.handler
+
+stepFunctions:
+  validate: true
+  stateMachines:
+    makeBooking:
+      name: bookingFlow-${opt:stage, 'dev'}
+      type: EXPRESS
+      events:
+        - http:
+            path: different/booking/{retailerId}/{periodId}
+            method: POST
+            action: StartSyncExecution
+            cors: true
+            request:
+              headers:
+                Content-Type: "'application/json'"
+              template:
+                application/json: |
+                  #set($inputString = "{@requestBody@: $input.json('$'), @pathParameters@: {")
+                  #set($pathParams = $input.params().get('path'))
+                  #foreach($paramName in $pathParams.keySet())
+                    #set($inputString = "$inputString @$paramName@: @$pathParams.get($paramName)@")
+                    #if($foreach.hasNext)
+                      #set($inputString = "$inputString,")
+                    #end
+                  #end
+                  #set($inputString = "$inputString }}")
+                  #set($inputString = $inputString.replaceAll("@",'"'))
+                  {
+                  "input": "$util.escapeJavaScript($inputString).replaceAll("\\'","'")",
+                  "name": "$context.requestId",
+                  "stateMachineArn": "arn:aws:states:${aws:region}:${aws:accountId}:stateMachine:bookingFlow-${opt:stage, 'dev'}"
+                  }
+      definition:
+        StartAt: getBooking
+        States:
+          getBooking:
+            Type: Task
+            Resource: !GetAtt getBooking.Arn
+            ResultPath: "$.booking"
+            Next: bookingExists
+          bookingExists:
+            Type: Choice
+            Choices:
+              - Variable: "$.booking.getBookingStatus"
+                StringEquals: "${self:custom.TK_EXISTS}"
+                Next: getTKBooking
+              - Variable: "$.booking.getBookingStatus"
+                StringEquals: "${self:custom.TK_NOT_FOUND}"
+                Next: createTKBooking
+              - Variable: "$.booking.getBookingStatus"
+                StringEquals: "${self:custom.BOOK_NOT_FOUND}"
+                Next: sendNotFoundError
+          getTKBooking:
+            Type: Task
+            Resource: !GetAtt getTKBooking.Arn
+            ResultPath: "$.result"
+            End: true
+          createTKBooking:
+            Type: Task
+            Resource: !GetAtt createTKBooking.Arn
+            ResultPath: "$.result"
+            End: true
+          sendNotFoundError:
+            Type: Task
+            Resource: !GetAtt sendNotFoundError.Arn
+            ResultPath: "$.error"
+            End: true
+
+plugins:
+  - serverless-step-functions
+  - serverless-plugin-typescript
+
+
