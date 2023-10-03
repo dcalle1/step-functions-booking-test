@@ -6,6 +6,17 @@ custom:
   TK_NOT_FOUND: "TK_NOT_FOUND"
   BOOK_NOT_FOUND: "BOOK_NOT_FOUND"
 
+  stepFunctionsLocal:
+    accountId: "318242395170"
+    region: us-east-1
+    lambdaEndpoint: http://localhost:3002
+    startStepFunctionsLocalApp: false
+    TaskResourceMapping:
+      getBooking: "arn:aws:lambda:${aws:region}:${aws:accountId}:function:${self:service}-${opt:stage, 'dev'}-getBooking"
+      getTKBooking: "arn:aws:lambda:${aws:region}:${aws:accountId}:function:${self:service}-${opt:stage, 'dev'}-getTKBooking"
+      createTKBooking: "arn:aws:lambda:${aws:region}:${aws:accountId}:function:${self:service}-${opt:stage, 'dev'}-createTKBooking"
+      sendNotFoundError: "arn:aws:lambda:${aws:region}:${aws:accountId}:function:${self:service}-${opt:stage, 'dev'}-sendNotFoundError"
+
 provider:
   name: aws
   runtime: nodejs18.x
@@ -94,7 +105,9 @@ stepFunctions:
             End: true
 
 plugins:
-  - serverless-step-functions
   - serverless-plugin-typescript
+  - serverless-step-functions
+  - serverless-step-functions-local-docker
+  - serverless-offline
 
 

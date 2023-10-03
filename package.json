@@ -4,10 +4,12 @@
   "description": "",
   "devDependencies": {
     "@types/aws-lambda": "^8.10.122",
-    "@types/aws-sdk": "^2.7.0",
-    "@types/node": "^20.8.0",
+    "@types/node": "^20.8.2",
+    "serverless": "^3.35.2",
+    "serverless-offline": "^13.1.2",
     "serverless-plugin-typescript": "^2.1.5",
     "serverless-step-functions": "^3.16.0",
+    "serverless-step-functions-local-docker": "^2.0.0",
     "typescript": "^5.2.2"
   }
 }
